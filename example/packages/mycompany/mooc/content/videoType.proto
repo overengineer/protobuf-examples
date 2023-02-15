@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package mycompany.mooc.content;
+
+enum Type {
+    UNDEFINED = 0;
+    MP4 = 1;
+    MOV = 2;
+}

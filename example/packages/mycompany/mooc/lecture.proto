@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package mycompany.mooc;
+
+import "mycompany/mooc/content/video.proto";
+import "mycompany/mooc/content/article.proto";
+
+message Lecture {
+    oneof Content
+    {
+        content.Video video = 1;
+        content.Article article = 2;
+    }
+}

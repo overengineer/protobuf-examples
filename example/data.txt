@@ -1,0 +1,20 @@
+name: "LFS145"
+authors: "Clement Jean"
+authors: "Linux Foundation"
+lectures: {
+    key: "Field Anatomy"
+    value: {
+        video: {
+            type: MP4
+            url: "example.com"
+        }
+    }
+}
+lectures: {
+    key: "Decode/Encode"
+    value: {
+        article: {
+            text: "Lorem Ipsum"
+        }
+    }
+}

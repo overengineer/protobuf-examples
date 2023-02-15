@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package mycompany.mooc.content;
+
+import "mycompany/mooc/content/videoType.proto";
+
+message Video {
+    Type type = 1;
+    string url = 2;
+}
