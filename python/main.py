@@ -7,6 +7,8 @@ import proto.login_pb2
 import google.protobuf.duration_pb2
 import google.protobuf.timestamp_pb2
 import google.protobuf.field_mask_pb2
+import google.protobuf.wrappers_pb2
+import google.protobuf.json_format
 
 def account():
     return proto.account_pb2.Account(
@@ -66,6 +68,46 @@ def field_mask():
     fm.MergeMessage(a, iiv)
     return iiv
 
+def wrappers():
+    return [
+        google.protobuf.wrappers_pb2.BoolValue(value=True),
+        google.protobuf.wrappers_pb2.BytesValue(value=b'lorem ipsum'),
+        google.protobuf.wrappers_pb2.FloatValue(value=3.17),
+    ]
+
+def serialize():
+    a = account()
+    path = 'account.bin'
+    print(a)
+    with open(path, 'wb') as f:
+        data = a.SerializeToString()
+        f.write(data)
+
+    with open(path, 'rb') as f:
+        data = f.read()
+        a = proto.account_pb2.Account().FromString(data)
+    print(a)
+    
+def to_json(message):
+    return google.protobuf.json_format.MessageToJson(
+        message,
+        indent=None,
+        preserving_proto_field_name=True
+    )
+
+def from_json(json_str, msg_type):
+    return google.protobuf.json_format.Parse(
+        json_str,
+        msg_type(),
+        ignore_unknown_fields=True
+    )
+
+def json():
+    a = account()
+    json_str = to_json(a)
+    print(json_str) 
+    msg = from_json(json_str, proto.account_pb2.Account)   
+    print(msg)
 
 if __name__ == "__main__":
     fns = {
@@ -77,5 +119,8 @@ if __name__ == "__main__":
         'duration': duration,
         'timestamp': timestamp,
         'field_mask': field_mask,
+        'wrappers': wrappers,
+        'serialize': serialize,
+        'json': json,
     }
     print(fns[sys.argv[1]]())
